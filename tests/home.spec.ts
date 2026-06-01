@@ -5,6 +5,10 @@ test.describe("Home Page tests with no auth", () => {
     await page.goto("https://practicesoftwaretesting.com/");
   });
 
+  // test("visual test", async ({ page }) => {
+  //   await expect(page).toHaveScreenshot("home-page-no-auth.png");
+  // });
+
   test("check sign in", async ({ page }) => {
     await expect(page.getByTestId("nav-sign-in")).toHaveText("Sign in");
   });
@@ -29,14 +33,18 @@ test.describe("Home Page tests with no auth", () => {
   });
 });
 
-test.describe("Home Page tests customer 01 auth", () => {
-  test.use({ storageState: ".auth/customer01.json" });
+test.describe("Home Page tests customer 02 auth", () => {
+  test.use({ storageState: ".auth/customer02.json" });
   test.beforeEach(async ({ page }) => {
     await page.goto("https://practicesoftwaretesting.com/");
   });
 
-  test("check if customer 01 is logged in", async ({ page }) => {
+  // test("visual test authorized", async ({ page }) => {
+  //   await expect(page).toHaveScreenshot("home-page-customer01-auth.png");
+  // });
+
+  test("check if customer 02 is logged in", async ({ page }) => {
     await expect(page.getByTestId("nav-sign-in")).not.toBeVisible();
-    await expect(page.getByTestId("nav-menu")).toContainText("Jane Doe");
+    await expect(page.getByTestId("nav-menu")).toContainText("Jack Howe");
   });
 });

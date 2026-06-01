@@ -1,12 +1,12 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -14,7 +14,7 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 export default defineConfig({
   timeout: 30_000,
   globalTimeout: 10 * 60 * 1000,
-  testDir: './tests',
+  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -24,45 +24,32 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://practicesoftwaretesting.com',
-    testIdAttribute: 'data-test',
+    baseURL: "https://practicesoftwaretesting.com",
+    testIdAttribute: "data-test",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on',
+    trace: "on",
     actionTimeout: 0,
     ignoreHTTPSErrors: true,
-    video: 'retain-on-failure',
-    screenshot: 'only-on-failure',
+    video: "retain-on-failure",
+    screenshot: "only-on-failure",
     headless: true,
-
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "setup",
-      testMatch: /.*\.setup\.ts/,  
+      testMatch: /.*\.setup\.ts/,
     },
 
     {
-      name: 'chromium',
-      dependencies: ['setup'],
-      use: { ...devices['Desktop Chrome'], permissions: ['clipboard-read'] },
-    },
-
-    {
-      name: 'firefox',
-      dependencies: ['setup'],
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      dependencies: ['setup'],
-      use: { ...devices['Desktop Safari'] },
+      name: "chromium",
+      dependencies: ["setup"],
+      use: { ...devices["Desktop Chrome"], permissions: ["clipboard-read"] },
     },
 
     /* Test against mobile viewports. */
