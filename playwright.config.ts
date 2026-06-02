@@ -36,7 +36,7 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     video: "retain-on-failure",
     screenshot: "only-on-failure",
-    headless: true,
+    headless: false,
   },
 
   /* Configure projects for major browsers */
