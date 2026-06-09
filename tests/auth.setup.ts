@@ -1,17 +1,13 @@
 import { test as setup, expect } from "@playwright/test";
+import { LoginPage } from "../pages/login/loginPage";
 
 setup("Create customer 01 authentication", async ({ page, context }) => {
-  const email = "customer2@practicesoftwaretesting.com";
-  const password = "welcome01";
+  const loginPage = new LoginPage(page);
   const customer02AuthFile = ".auth/customer02.json";
 
-  await page.goto("https://practicesoftwaretesting.com/auth/login");
-  await page.getByTestId("email").fill(email);
-  await page.getByTestId("password").fill(password);
+  await loginPage.goto();
+  await loginPage.login(process.env.CUST2!, process.env.PASS!);
   await page.getByTestId("login-submit").click();
-
-  await expect(page.locator('[data-test="nav-menu"]')).toContainText(
-    "Jack Howe",
-  );
+  await expect(page.getByTestId("nav-menu")).toContainText("Jack Howe");
   await page.context().storageState({ path: customer02AuthFile });
 });

@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Checkout tests with customer 02 auth", () => {
   test.use({ storageState: ".auth/customer02.json" });
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://practicesoftwaretesting.com/");
+    await page.goto(process.env.URL!);
   });
 
   test("buy now pay later", async ({ page, headless }) => {
@@ -34,5 +34,24 @@ test.describe("Checkout tests with customer 02 auth", () => {
     await expect(page.locator(".help-block")).toHaveText(
       "Payment was successful",
     );
+    headless
+      ? await test.step("visual test", async () => {
+          await expect(page).toHaveScreenshot("checkout.png", {
+            mask: [page.getByTitle("Practice Software Testing - Toolshop")],
+          });
+        })
+      : console.log("Visual test skipped in headed mode");
+  });
+
+  test("remove items from cart", async ({ page }) => {
+    await page.getByText("Bolt Cutters").click();
+    await page.getByTestId("add-to-cart").click();
+    await expect(page.getByTestId("cart-quantity")).toHaveText("1");
+    await page.getByTestId("nav-cart").click();
+    await page.locator(".btn.btn-danger").click();
+    await expect(page.locator("app-cart")).toMatchAriaSnapshot(
+      `- paragraph: The cart is empty. Nothing to display.`,
+    );
+    await page.getByTestId("nav-home").click();
   });
 });
