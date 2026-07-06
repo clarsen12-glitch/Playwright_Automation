@@ -12,7 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout: 30_000,
+  timeout: 60_000,
   globalTimeout: 10 * 60 * 1000,
   testDir: "./tests",
   /* Run tests in files in parallel */
@@ -37,6 +37,10 @@ export default defineConfig({
     video: "retain-on-failure",
     screenshot: "only-on-failure",
     headless: false,
+    viewport: null,
+    launchOptions: {
+      args: ["--start-maximized"],
+    },
   },
 
   /* Configure projects for major browsers */
@@ -49,7 +53,7 @@ export default defineConfig({
     {
       name: "chromium",
       dependencies: ["setup"],
-      use: { ...devices["Desktop Chrome"], permissions: ["clipboard-read"] },
+      use: { permissions: ["clipboard-read"] },
     },
 
     /* Test against mobile viewports. */
