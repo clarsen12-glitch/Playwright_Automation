@@ -21,5 +21,5 @@ test("login with page object test", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login("customer2@practicesoftwaretesting.com", "welcome01");
-  await expect(page.getByTestId("nav-menu")).toContainText("Jack Howe");
+  await expect(page.getByTestId("nav-menu")).toContainText("Johnny Black");
 });
